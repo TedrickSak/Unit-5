@@ -1,0 +1,139 @@
+void game() {
+  background(#3B763F);
+  
+  //player 1
+  stroke(0);
+  strokeWeight(3);
+  fill(#DE5628);
+  circle(x1, y1, 30);
+  if (cd1 == false) {
+    if (up1) y1 -= speed1;
+    if (down1) y1 += speed1;
+    if (left1) x1 -= speed1;
+    if (right1) x1 += speed1;
+  }
+  
+  //player 2
+  stroke(0);
+  strokeWeight(3);
+  fill(#1D9ECB);
+  circle(x2, y2, 30);
+  if (cd2 == false) {
+    if (up2) y2 -= speed2;
+    if (down2) y2 += speed2;
+    if (left2) x2 -= speed2;
+    if (right2) x2 += speed2;
+  }
+  
+  //timer
+  timer -= 0.01666666666;
+  fill(255);
+  textSize(20);
+  text(timer,600,30);
+  
+  if (crown == 0) {
+    if (dist(crownx,crowny,x1,y1) < 30) {
+      crown = 1;
+    } else if (dist(crownx,crowny,x2,y2) < 30) {
+      crown = 2;
+    }
+  }
+  
+  if (crown == 0) {
+    crown(600,400);
+  } else if (crown == 1) {
+    crown(x1,y1);
+  } else if (crown == 2) {
+    crown(x2,y2);
+  }
+  
+  if (dist(x1,y1,x2,y2) < 30) {
+    if (crown == 1 && cd2 == false) {
+      crown = 2;
+      cd1 = true;
+
+    } else if (crown == 2 && cd1 == false) {
+      crown = 1;
+      cd2 = true;
+    }
+  }
+  
+  //if (cd3 == true) {
+    //if (dist(x1,y1,x2,y2) < 45) {
+      //cd1 = true;
+    //} else {
+      //cd1 = false;
+      //cd3 = false;
+    //}
+  //}
+  
+}
+
+void crown(float x, float y) {
+  fill(#FCE008);
+  rect(x-15,y-15,30,10);
+  triangle(x-15,y-25,x-15,y-15,x-5,y-15);
+  triangle(x+15,y-25,x+15,y-15,x+5,y-15);
+  triangle(x-5,y-15,x+5,y-15,x,y-25);
+  crownx = x;
+  crowny = y-15;
+}
+
+void cooldown1() {
+
+}
+
+void cooldown2() {
+
+}
+  
+
+int scoreBlue, scoreRed; //player scores
+float counter;
+char winner;
+float x1, y1, speed1;
+float x2, y2, speed2;
+boolean up1, down1, right1, left1;
+boolean up2, down2, right2, left2;
+boolean cd1, cd2, cd3;
+float timer;
+int crown;
+float crownx, crowny;
+
+int mode;
+final int INTRO = 0;
+final int GAME = 1;
+final int PAUSE = 2;
+final int OVER = 3;
+
+void setup() {
+  size(1200,800,P2D);
+  mode = 1;
+  counter = 0;
+  scoreBlue = 0;
+  scoreRed = 0;
+  x1 = 300;
+  y1 = 400;
+  x2 = 900;
+  y2 = 400;
+  speed1 = 1;
+  speed2 = 1;
+  timer = 91;
+  textAlign(CENTER,CENTER);
+  crown = 0;
+}
+
+
+void draw() {
+  if (mode == INTRO) {
+    intro();
+  } else if (mode == GAME) {
+    game();
+  } else if (mode == PAUSE) {
+    pause();
+  } else if (mode == OVER) {
+    gameOver();
+  } else {
+    println("Error, mode is" + mode);
+  }
+}
