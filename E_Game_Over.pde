@@ -1,12 +1,12 @@
 void gameOver() {
   noStroke();
-  if (score1 == score2) {
+  if (int(score1) == int(score2)) {
     fill(100);
   }
-  if (score1 > score2) {
+  if (int(score1) > int(score2)) {
     fill(#F58DB1);
   }
-  if (score2 > score1) {
+  if (int(score2) > int(score1)) {
     fill(#A1E0D4);
   }
   rect(0,0,1200,800);
@@ -14,7 +14,7 @@ void gameOver() {
   textSize(100);
   textAlign(CENTER, CENTER);
   if (int(score1) == int(score2)) {
-    text("TIE!", 600, 400);
+    text("TIE!", 600, 330);
   }
   if (int(score1) > int(score2)) {
     text("RED WINS!", 600, 330);
